@@ -1,0 +1,370 @@
+:root {
+    --header-height: 3.6rem;
+    --light: 239, 239, 239;
+    --dark: 15, 15, 31;
+    --primary: 0, 0, 159;
+    --positive: 0, 159, 0;
+    --negative: 159, 0, 0;
+    --mask-opacity: 75%;
+    --primary-color: rgb(var(--primary));
+    --positive-color: rgb(var(--positive));
+    --negative-color: rgb(var(--negative));
+    --fg-color: rgb(var(--light));
+    --bg-color: rgb(var(--dark));
+    --mask-color: rgba(0, 0, 0, var(--mask-opacity));
+    --gap-1: 2.4rem;
+    --gap-2: 2rem;
+    --gap-3: 1.6rem;
+    --gap-4: 1.2rem;
+    --padding-1: 3.2rem;
+    --padding-2: 2.4rem;
+    --padding-3: 1.6rem;
+    --padding-4: 0.8rem;
+    --padding-x: 10vw;
+}
+
+@media (prefers-color-scheme: light) { /* TODO: Set this to light */
+    :root {
+        --primary: 15, 15, 191;
+        --positive: 15, 191, 15;
+        --negative: 191, 15, 15;
+        --fg-color: rgb(var(--dark));
+        --bg-color: rgb(var(--light));
+        --mask-color: rgba(255, 255, 255, var(--mask-opacity));
+    }
+}
+
+*, *::before, *::after {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: var(--fg-color);
+    transition: all 0.2s ease-out;
+    scroll-behavior: smooth;
+    fill: currentColor;
+    object-fit: cover;
+}
+
+html, body {
+    height: 100%;
+    background: var(--bg-color);
+}
+
+body > div {
+    position: relative;
+}
+
+body > * {
+    width: 100%;
+}
+
+h1 {font-size: 2.4rem; font-weight: 700;}
+h2 {font-size: 2rem; font-weight: 700;}
+h3 {font-size: 1.6rem; font-weight: 700;}
+p {font-size: 1.2rem; font-weight: 500;}
+
+body > aside:only-of-type {
+    position: fixed;
+    right: var(--padding-3);
+    bottom: var(--padding-3);
+    width: unset;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: end;
+    align-items: end;
+    align-content: end;
+    gap: var(--gap-3);
+    z-index: 1;
+    pointer-events: none;
+}
+
+body > aside:only-of-type > div {
+    position: relative;
+    display: none;
+    flex-direction: row;
+    justify-content: end;
+    align-items: start;
+    align-content: start;
+    gap: var(--gap-3);
+    padding: var(--padding-4);
+    background: var(--bg-color);
+    max-width: 24rem;
+    border-radius: .5rem;
+    box-shadow: 0 0 0.25rem 0.125rem rgb(0, 0, 0);
+    transform-origin: bottom right;
+    pointer-events: all;
+    opacity: 75%;
+}
+
+body > aside:only-of-type > div:hover {
+    opacity: 100%;
+}
+
+body > aside:only-of-type > div[data-alert-type="neutral"] {display: flex; background: var(--bg-color);}
+body > aside:only-of-type > div[data-alert-type="reverse"] {display: flex; background: var(--fg-color);}
+body > aside:only-of-type > div[data-alert-type="info"] {display: flex; background: var(--primary-color);}
+body > aside:only-of-type > div[data-alert-type="positive"] {display: flex; background: var(--positive-color);}
+body > aside:only-of-type > div[data-alert-type="negative"] {display: flex; background: var(--negative-color);}
+
+body > aside:only-of-type > div > * {font-size: 1rem; color: rgb(var(--light));}
+body > aside:only-of-type > div[data-alert-type="neutral"] > * {color: var(--fg-color);}
+
+body > aside:only-of-type > div > :not([data-to-dismiss]) {
+    margin: auto 0.25rem;
+    line-height: initial;
+}
+
+body > aside:only-of-type > div > [data-to-dismiss] {
+    position: relative;
+    cursor: pointer;
+    width: 1.6rem;
+    height: 1.6rem;
+    flex-shrink: 0;
+    border: none;
+    background: none;
+    border-radius: 0;
+    margin: -0.2rem;
+}
+
+body > aside:only-of-type > div > [data-to-dismiss] > :only-child {
+    position: absolute;
+    height: 1.2rem;
+    width: 1.2rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    fill: rgb(var(--light));
+}
+
+body > aside:only-of-type > div[data-alert-type="neutral"] > [data-to-dismiss] > :only-child {fill: var(--fg-color);}
+
+.dismissed {
+    scale: 75% !important;
+    opacity: 0 !important;
+    transition: all 0.25s ease-out !important;
+}
+
+.hover-effect:hover {
+    scale: 110%;
+}
+
+.click-effect:active {
+    scale: 90%;
+}
+
+body > header {
+    position: fixed;
+    top: 0;
+    height: var(--header-height);
+    box-shadow: 0 0 0.25rem 0.125rem rgb(0, 0, 0);
+    background: var(--bg-color);
+    height: var(--header-height);
+    padding: 0 var(--padding-x);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    gap: var(--gap-1);
+    z-index: 1;
+}
+
+body > header > svg {
+    height: 2.4rem;
+    width: 2.4rem;
+    cursor: pointer;
+}
+
+body > header > nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: var(--gap-1);
+}
+
+body > header > nav > a {
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+}
+
+body > header > nav > a.primary {
+    padding: 0.5rem;
+    background: var(--fg-color);
+    color: var(--bg-color);
+    border-radius: 0.5rem;
+    font-weight: 600;
+}
+
+.hover-underline {
+    position: relative;
+}
+
+body > header > nav > a:not(.primary)::after, .hover-underline::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    height: 0.1em;
+    width: 25%;
+    transform: translateX(-50%);
+    background: transparent;
+    border-radius: 0.05em;
+}
+
+body > header > nav > a:not(.primary):hover::after, .hover-underline:hover::after {
+    top: calc(100% + 0.1em);
+    width: 100%;
+    background: currentColor;
+}
+
+body > header > nav > a:not(.primary):active::after, .hover-underline:active::after {
+    width: 75%;
+}
+
+body > main > * {
+    position: relative;
+}
+
+body > main > section, body > footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    gap: var(--gap-1);
+    padding: var(--padding-1) var(--padding-x);
+}
+
+body > main > section > * {
+    text-align: center;
+}
+
+body > main > section#hero:first-of-type {
+    height: 100vh;
+    padding: var(--header-height) var(--padding-x);
+    background: url("bg.png");
+    background-size: cover;
+    background-position: center center;
+}
+
+body > main > section#hero:first-of-type::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--mask-color);
+}
+
+body > main > section#hero:first-of-type > * {
+    position: relative;
+}
+
+body > main > section#hero:first-of-type > h1 {
+    font-size: 3.2rem;
+}
+
+body > main > section#hero:first-of-type > p {
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+body > main > section#hero:first-of-type > button {
+    font-size: 1.6rem;
+    background: var(--bg-color);
+    padding: var(--padding-4);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 0 0 0 transparent;
+}
+
+body > main > section#hero:first-of-type > button:hover {
+    box-shadow: 0 0 0.5rem 0 white;
+}
+
+body > main > section#hero:first-of-type::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: calc(2 * var(--header-height));
+    background: linear-gradient(to bottom, transparent, var(--bg-color));
+    pointer-events: none;
+}
+
+body > main > section > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+    align-content: start;
+    gap: var(--gap-2);
+}
+
+body > main > section#about > div {
+    align-items: center;
+    align-content: center;
+}
+
+body > main > section#about > div > img {
+    aspect-ratio: 16 / 9;
+    width: 36vw;
+    border-radius: 0.5rem;
+}
+
+body > main > section#about > div > * {
+    text-align: left;
+    line-height: initial;
+    font-size: 1.6rem;
+}
+
+body > main > section#features > div > * {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    align-content: center;
+    gap: var(--gap-4);
+}
+
+body > main > section#features > div > * > img {
+    aspect-ratio: 1 / 1;
+    width: 20vw;
+    border-radius: 0.5rem;
+}
+
+body > main > section#features > div > * > p {
+    line-height: initial;
+}
+
+body > main > section#contact > p {
+    font-size: 1.6rem;
+}
+
+body > main > section#contact > p > a {
+    text-decoration: none;
+}
+
+body > footer {
+    flex-direction: row;
+}
+
+body > footer > p {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+body > footer > p > a {
+    position: relative;
+    text-decoration: none;
+}
